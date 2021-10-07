@@ -4,7 +4,7 @@ import ShowImage from './ShowImage';
 import moment from "moment";
 import { addItem, updateItem, removeItem } from "./cartHelpers";
 
-const Card = ({ product, showViewProductButton = true, showAddToCartButton=true, cartUpdate=false, showRemoveProductButton=false }) => {
+const Card = ({ product, showViewProductButton = true, showAddToCartButton=true, cartUpdate=false, showRemoveProductButton=false, setRun = f => f, run = undefined }) => {
     const [redirect, setRedirect] = useState(false);
     const [count, setCount] = useState(product.count);
 
@@ -44,11 +44,17 @@ const Card = ({ product, showViewProductButton = true, showAddToCartButton=true,
 
     const showRemoveButton = showRemoveProductButton => {
         return (
-            showRemoveProductButton && (
-                <button onClick={() => removeItem(product._id)} className="btn btn-outline-danger mt-2 mb-2">
-                    Remove product
-                </button>
-            )
+          showRemoveProductButton && (
+            <button
+              onClick={() => {
+                removeItem(product._id);
+                setRun(!run); // run useEffect in parent Cart
+              }}
+              className="btn btn-outline-danger mt-2 mb-2"
+            >
+              Remove Product
+            </button>
+          )
         );
     };
 
@@ -61,11 +67,12 @@ const Card = ({ product, showViewProductButton = true, showAddToCartButton=true,
     };
 
     const handleChange = productId => event => {
+        setRun(!run); // run useEffect in parent Cart
         setCount(event.target.value < 1 ? 1 : event.target.value);
         if (event.target.value >= 1) {
-            updateItem(productId, event.target.value);
+          updateItem(productId, event.target.value);
         }
-    };
+      };
 
     const showCartUpdateOptions = cartUpdate => {
         return cartUpdate && (

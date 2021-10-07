@@ -8,21 +8,30 @@ import Checkout from './Checkout';
 
 const Cart = () => {
     const [items, setItems] = useState([]);
+    const [run, setRun] = useState(false);
 
     useEffect(() => {
         setItems(getCart());
-    }, [items]);
+    }, [run]);
 
     const showItems = items => {
         return (
-            <div>
-                <h2>Your cart has {`${items.length}`} items</h2>
-                <hr/>
-                {items.map((product, i) => (
-                    <Card key={i} product={product} showAddToCartButton={false} cartUpdate={true} showRemoveProductButton={true} />
-                ))}
-            </div>
-        )
+          <div>
+            <h2>Your cart has {`${items.length}`} items</h2>
+            <hr />
+            {items.map((product, i) => (
+              <Card
+                key={i}
+                product={product}
+                showAddToCartButton={false}
+                cartUpdate={true}
+                showRemoveProductButton={true}
+                setRun={setRun}
+                run={run}
+              />
+            ))}
+          </div>
+        );
     };
 
     const noItemsMessage = () => (
@@ -40,7 +49,7 @@ const Cart = () => {
                         Your cart summary
                     </h2>
                     <hr/>
-                    <Checkout products={items} />
+                    <Checkout products={items} setRun={setRun} run={run} />
                 </div>
             </div>
         </Layout>

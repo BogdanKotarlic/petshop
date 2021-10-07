@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import Layout from './Layout';
-import { getProducts, getBraintreeClientToken } from './apiCore';
-import { Link } from 'react-router-dom';
-import Card from './Card';
+import { getProducts, getBraintreeClientToken, processPayment, createOrder } from './apiCore';
+import { emptyCart } from './cartHelpers';
 import { isAuthenticated } from '../auth';
+import { Link } from 'react-router-dom';
 import DropIn from 'braintree-web-drop-in-react';
 
-const Checkout = ({ products }) => {
+const Checkout = ({ products, setRun = f => f, run = undefined }) => {
     const [data, setData] = useState({
+        loading: false,
         success: false,
         clientToken: null,
         error: '',
@@ -34,6 +34,9 @@ const Checkout = ({ products }) => {
         getToken(userId, token);
     }, []);
 
+    const handleAddress = event => {
+        setData({ ...data, address: event.target.value });
+    };
 
     const getTotal = () => {
         return products.reduce((currentValue, nextValue) => {
@@ -48,46 +51,113 @@ const Checkout = ({ products }) => {
             <Link to="/signin">
                 <button className="btn btn-primary">Sign in to checkout</button>
             </Link>
-        )
-    }
+        );
+    };
+
+    let deliveryAddress = data.address;
 
     const buy = () => {
+        setData({ loading: true });
         let nonce;
-        let getNonce = data.instance.requestPaymentMethod()
-        .then(data => {
-            console.log(data);
-            nonce = data.nonce;
+        let getNonce = data.instance
+            .requestPaymentMethod()
+            .then(data => {
 
-            console.log('send nonce and total to process: ', nonce, getTotal(products));
-        })
-        .catch(error => {
-            console.log('dropin error: ', error);
-            setData({ ...data, error: error.message });
-        })
+                nonce = data.nonce;
+
+                const paymentData = {
+                    paymentMethodNonce: nonce,
+                    amount: getTotal(products)
+                };
+
+                processPayment(userId, token, paymentData)
+                    .then(response => {
+                        console.log(response);
+
+                        const createOrderData = {
+                            products: products,
+                            transaction_id: response.transaction.id,
+                            amount: response.transaction.amount,
+                            address: deliveryAddress
+                        };
+
+                        createOrder(userId, token, createOrderData)
+                            .then(response => {
+                                emptyCart(() => {
+                                    setRun(!run);
+                                    console.log('payment success and empty cart');
+                                    setData({
+                                        loading: false,
+                                        success: true
+                                    });
+                                });
+                            })
+                            .catch(error => {
+                                console.log(error);
+                                setData({ loading: false });
+                            });
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        setData({ loading: false });
+                    });
+            })
+            .catch(error => {
+                // console.log("dropin error: ", error);
+                setData({ ...data, error: error.message });
+            });
     };
 
     const showDropIn = () => (
-        <div onBlur={() => setData({...data, error: ""})}>
+        <div onBlur={() => setData({ ...data, error: '' })}>
             {data.clientToken !== null && products.length > 0 ? (
                 <div>
-                    <DropIn options={{
-                        authorization: data.clientToken
-                    }} onInstance={instance => (data.instance = instance)} />
-                    <button onClick={buy} className="btn btn-success">Pay</button>
+                    <div className="gorm-group mb-3">
+                        <label className="text-muted">Delivery address:</label>
+                        <textarea
+                            onChange={handleAddress}
+                            className="form-control"
+                            value={data.address}
+                            placeholder="Type your delivery address here..."
+                        />
+                    </div>
+
+                    <DropIn
+                        options={{
+                            authorization: data.clientToken,
+                            paypal: {
+                                flow: 'vault'
+                            }
+                        }}
+                        onInstance={instance => (data.instance = instance)}
+                    />
+                    <button onClick={buy} className="btn btn-success btn-block">
+                        Pay
+                    </button>
                 </div>
             ) : null}
         </div>
     );
 
     const showError = error => (
-        <div className="alert alert-danger" style={{display: error ? '' : 'none'}}>
+        <div className="alert alert-danger" style={{ display: error ? '' : 'none' }}>
             {error}
         </div>
     );
 
+    const showSuccess = success => (
+        <div className="alert alert-info" style={{ display: success ? '' : 'none' }}>
+            Thanks! Your payment was successful!
+        </div>
+    );
+
+    const showLoading = loading => loading && <h2 className="text-danger">Loading...</h2>;
+
     return (
         <div>
             <h2>Total: ${getTotal()}</h2>
+            {showLoading(data.loading)}
+            {showSuccess(data.success)}
             {showError(data.error)}
             {showCheckout()}
         </div>
