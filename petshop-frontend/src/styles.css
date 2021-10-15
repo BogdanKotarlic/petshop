@@ -1,6 +1,27 @@
 /**
  * border radius
  */
+ @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
+
+ html, body {
+    background-color: #484e53;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+ }
+
+ .padding {
+     padding-bottom: 2rem;
+ }
+
+ .welcome {
+    width: 75%;
+    margin: 0 auto;
+    padding-top: 2rem;
+ }
+
+ .display-4 {
+     margin-bottom: 2rem;
+ }
 
  .btn,
  .jumbotron,
