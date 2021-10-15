@@ -6,10 +6,10 @@ const Layout = ({ title = 'Title', description = 'Description', className, child
     return (
         <div>
             <Menu />
-            <div className="jumbotron">
+            {/* {/* <div className="jumbotron">
                 <h2>{title}</h2>
                 <p className="lead">{description}</p>
-            </div>
+            </div> */}
             <div className={className}>
                 {children}
             </div>

@@ -5,7 +5,7 @@ import { itemTotal } from "./cartHelpers";
 
 const isActive = (history, path) => {
     if (history.location.pathname === path) {
-        return { color: "#ff9900" };
+        return { color: "#f5dcb4" };
     } else {
         return { color: "#ffffff" };
     }
@@ -13,9 +13,17 @@ const isActive = (history, path) => {
 
 const Menu = ({ history }) => {
     return (
-        <div>
-            <ul className="nav nav-tabs bg-primary">
-                <li className="nav-item">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="#">
+					<img src="/images/logo.png" alt="logo" style={{width: '50px', height: '50px'}} />
+				</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarResponsive">
+					<ul class="navbar-nav ml-auto">
+                    <li className="nav-item">
                     <Link className="nav-link" style={isActive(history, '/')} to="/">Home</Link>
                 </li>
                 <li className="nav-item">
@@ -55,8 +63,10 @@ const Menu = ({ history }) => {
                         })}>Signout</span>
                     </li>
                 )}
-            </ul>
-        </div>
+					</ul>
+				</div>
+			</div>
+		</nav>
     );
 };
 
