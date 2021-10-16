@@ -1,10 +1,11 @@
 import React, { Fragment } from 'react';
 import Menu from './Menu';
+import Footer from './Footer';
 
 const Home = () => {
 
     const coloredLine = () => (
-        <hr style={{color: '#white', backgroundColor: 'white', height: 1, width: '75%'}} />
+        <hr style={{color: '#white', backgroundColor: 'white', height: 1, width: '75%', marginBottom: '3rem'}} />
     );
 
     const homeScreen = () => {
@@ -40,6 +41,7 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
+                
             </Fragment>
         );
     };
@@ -48,6 +50,7 @@ const Home = () => {
         <Fragment>
             <Menu />
             {homeScreen()}
+            <Footer />
         </Fragment>
     );
 };
