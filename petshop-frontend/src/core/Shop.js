@@ -5,6 +5,8 @@ import Checkbox from './Checkbox';
 import RadioBox from './RadioBox';
 import { prices } from './fixedPrices';
 import Card from './Card';
+import Menu from './Menu';
+import Footer from './Footer';
 
 const Shop = () => {
     const [myFilters, setMyFilters] = useState({
@@ -56,7 +58,7 @@ const Shop = () => {
     const loadMoreButton = () => {
         return (
             size > 0 && size >= limit && (
-                <button onClick={loadMore} className="btn btn-warning mb-5">Load more</button>
+                <button onClick={loadMore} className="btn btn-dark mt-3">Load more</button>
             )
         );
     };
@@ -92,8 +94,9 @@ const Shop = () => {
     };
 
     return (
-        <Layout title="Shop Page" description="Search and find books of your choice" className="container-fluid">
-            <div className="row">
+        <>
+            <Menu />
+            <div className="container-fluid row row2">
                 <div className="col-4">
                     <h4>Filter by categories</h4>
                     <ul>
@@ -107,7 +110,7 @@ const Shop = () => {
                 </div>
                 
                 <div className="col-8">
-                    <h2 className="mb-4">Products</h2>
+                    <h2 className="mb-4">PRODUCTS</h2>
                     <div className="row">
                         {filteredResults.map((product, i) => (
                             <div key={i} className="col-4 mb-3">
@@ -115,11 +118,11 @@ const Shop = () => {
                             </div>
                         ))}
                     </div>
-                    <hr />
                     {loadMoreButton()}
                 </div>
             </div>
-        </Layout>
+            <Footer />
+        </>
     )
 };
 
