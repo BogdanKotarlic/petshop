@@ -151,6 +151,10 @@
      color: #fff;
      font-weight: bold;
  }
+
+ .card ul li {
+   color: #000;
+ }
  
  .card-body p {
      color: #000;

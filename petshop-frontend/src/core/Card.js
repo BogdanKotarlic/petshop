@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import ShowImage from './ShowImage';
-import moment from "moment";
 import { addItem, updateItem, removeItem } from "./cartHelpers";
 
 const Card = ({ product, showViewProductButton = true, showAddToCartButton=true, cartUpdate=false, showRemoveProductButton=false, setRun = f => f, run = undefined }) => {
