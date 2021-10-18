@@ -1,5 +1,4 @@
 import React from "react";
-import Layout from '../core/Layout';
 import { Link } from "react-router-dom";
 import { isAuthenticated } from "../auth";
 import Menu from "../core/Menu";

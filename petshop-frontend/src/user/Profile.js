@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Layout from '../core/Layout';
 import { isAuthenticated } from '../auth';
 import { Redirect } from 'react-router-dom';
 import { read, update, updateUser } from './apiUser';
+import Menu from '../core/Menu';
 
 const Profile = ({ match }) => {
     const [values, setValues] = useState({
@@ -83,10 +83,11 @@ const Profile = ({ match }) => {
     );
 
     return (
-        <Layout title="Profile" description="Update your profile" className="container-fluid">
+        <>
+            <Menu />
             {profileUpdate(name, email, password)}
             {redirectUser(success)}
-        </Layout>
+        </>
     );
 };
 

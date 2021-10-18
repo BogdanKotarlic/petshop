@@ -47,9 +47,9 @@ const Card = ({ product, showViewProductButton = true, showAddToCartButton=true,
             <button
               onClick={() => {
                 removeItem(product._id);
-                setRun(!run); // run useEffect in parent Cart
+                setRun(!run);
               }}
-              className="btn btn-outline-danger mt-2 mb-2"
+              className="btn btn-danger mt-2 mb-2"
             >
               Remove Product
             </button>
@@ -59,9 +59,9 @@ const Card = ({ product, showViewProductButton = true, showAddToCartButton=true,
 
     const showStock = quantity => {
         return quantity > 0 ? (
-          <span className="badge badge-dark">In Stock </span>
+          <span className="badge badge-dark">In Stock</span>
         ) : (
-          <span className="badge badge-dark">Out of Stock </span>
+          <span className="badge badge-dark">Out of Stock</span>
         );
     };
 

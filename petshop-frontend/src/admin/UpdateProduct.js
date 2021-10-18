@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Layout from '../core/Layout';
 import { isAuthenticated } from '../auth';
 import { Link, Redirect } from 'react-router-dom';
 import { getProduct, getCategories, updateProduct } from './apiAdmin';
+import Menu from '../core/Menu';
 
 const UpdateProduct = ({ match }) => {
     const [values, setValues] = useState({
@@ -106,8 +106,8 @@ const UpdateProduct = ({ match }) => {
     };
 
     const newPostForm = () => (
-        <form className="mb-3" onSubmit={clickSubmit}>
-            <h4>Post Photo</h4>
+        <form className="welcome" onSubmit={clickSubmit}>
+            <label>Photo</label>
             <div className="form-group">
                 <label className="btn btn-secondary">
                     <input onChange={handleChange('photo')} type="file" name="photo" accept="image/*" />
@@ -115,22 +115,22 @@ const UpdateProduct = ({ match }) => {
             </div>
 
             <div className="form-group">
-                <label className="text-muted">Name</label>
+                <label className="text">Name</label>
                 <input onChange={handleChange('name')} type="text" className="form-control" value={name} />
             </div>
 
             <div className="form-group">
-                <label className="text-muted">Description</label>
+                <label className="text">Description</label>
                 <textarea onChange={handleChange('description')} className="form-control" value={description} />
             </div>
 
             <div className="form-group">
-                <label className="text-muted">Price</label>
+                <label className="text">Price</label>
                 <input onChange={handleChange('price')} type="number" className="form-control" value={price} />
             </div>
 
             <div className="form-group">
-                <label className="text-muted">Category</label>
+                <label className="text">Category</label>
                 <select onChange={handleChange('category')} className="form-control">
                     <option>Please select</option>
                     {categories &&
@@ -143,7 +143,7 @@ const UpdateProduct = ({ match }) => {
             </div>
 
             <div className="form-group">
-                <label className="text-muted">Shipping</label>
+                <label className="text">Shipping</label>
                 <select onChange={handleChange('shipping')} className="form-control">
                     <option>Please select</option>
                     <option value="0">No</option>
@@ -152,53 +152,41 @@ const UpdateProduct = ({ match }) => {
             </div>
 
             <div className="form-group">
-                <label className="text-muted">Quantity</label>
+                <label className="text">Quantity</label>
                 <input onChange={handleChange('quantity')} type="number" className="form-control" value={quantity} />
             </div>
-
-            <button className="btn btn-outline-primary">Update Product</button>
+            {showSuccess()}
+            {showError()}               
+            <button className="btn btn-dark">Update Product</button>
         </form>
     );
 
     const showError = () => (
-        <div className="alert alert-danger" style={{ display: error ? '' : 'none' }}>
-            {error}
-        </div>
+        <h3 className="text-danger" style={{display: error ? '' : 'none'}}>{error}</h3>
     );
 
     const showSuccess = () => (
-        <div className="alert alert-info" style={{ display: createdProduct ? '' : 'none' }}>
-            <h2>{`${createdProduct}`} is updated!</h2>
-        </div>
+        <h3 className="text-success" style={{display: createdProduct ? '' : 'none'}}>Product is created</h3>
     );
-
-    const showLoading = () =>
-        loading && (
-            <div className="alert alert-success">
-                <h2>Loading...</h2>
-            </div>
-        );
 
     const redirectUser = () => {
         if (redirectToProfile) {
             if (!error) {
-                return <Redirect to="/" />;
+                return <Redirect to="/admin/products" />;
             }
         }
     };
 
     return (
-        <Layout title="Add a new product" description={`G'day ${user.name}, ready to add a new product?`}>
+        <>
+            <Menu />
             <div className="row">
                 <div className="col-md-8 offset-md-2">
-                    {showLoading()}
-                    {showSuccess()}
-                    {showError()}
                     {newPostForm()}
                     {redirectUser()}
                 </div>
             </div>
-        </Layout>
+        </>
     );
 };
 

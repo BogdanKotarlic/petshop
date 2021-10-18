@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Layout from '../core/Layout';
 import { Link } from "react-router-dom";
 import { isAuthenticated } from "../auth";
 import { getPurchaseHistory } from "./apiUser";
 import moment from "moment";
+import Menu from "../core/Menu";
 
 const Dashboard = () => {
     const [history, setHistory] = useState([]);
@@ -64,7 +64,6 @@ const Dashboard = () => {
                         {history.map((h, i) => {
                             return (
                                 <div>
-                                    <hr />
                                     {h.products.map((p, i) => {
                                         return (
                                             <div key={i}>
@@ -74,6 +73,7 @@ const Dashboard = () => {
                                                     Purchased date:{" "}
                                                     {moment(p.createdAt).fromNow()}
                                                 </h6>
+                                                <hr style={{backgroundColor: "black"}} />
                                             </div>
                                         );
                                     })}
@@ -87,8 +87,9 @@ const Dashboard = () => {
     };
 
     return (
-        <Layout title="Dashboard" description={`G'day ${name}`} className="container-fluid">
-            <div className="row">
+        <>
+            <Menu />
+            <div className="welcome row">
                 <div className="col-3">
                     {userLinks()}
                 </div>
@@ -97,7 +98,7 @@ const Dashboard = () => {
                     {purchaseHistory(history)}
                 </div>
             </div>
-        </Layout>
+        </>
     );
 };
 

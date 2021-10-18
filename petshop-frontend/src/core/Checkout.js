@@ -49,7 +49,7 @@ const Checkout = ({ products, setRun = f => f, run = undefined }) => {
             <div>{showDropIn()}</div>
         ) : (
             <Link to="/signin">
-                <button className="btn btn-primary">Sign in to checkout</button>
+                <button className="btn btn-dark">Please Sign In</button>
             </Link>
         );
     };
@@ -113,7 +113,7 @@ const Checkout = ({ products, setRun = f => f, run = undefined }) => {
             {data.clientToken !== null && products.length > 0 ? (
                 <div>
                     <div className="gorm-group mb-3">
-                        <label className="text-muted">Delivery address:</label>
+                        <label className="text">Delivery address:</label>
                         <textarea
                             onChange={handleAddress}
                             className="form-control"
@@ -131,7 +131,7 @@ const Checkout = ({ products, setRun = f => f, run = undefined }) => {
                         }}
                         onInstance={instance => (data.instance = instance)}
                     />
-                    <button onClick={buy} className="btn btn-success btn-block">
+                    <button onClick={buy} className="btn btn-warning btn-block">
                         Pay
                     </button>
                 </div>
@@ -140,18 +140,18 @@ const Checkout = ({ products, setRun = f => f, run = undefined }) => {
     );
 
     const showError = error => (
-        <div className="alert alert-danger" style={{ display: error ? '' : 'none' }}>
+        <h5 className="text-danger" style={{ display: error ? '' : 'none' }}>
             {error}
-        </div>
+        </h5>
     );
 
     const showSuccess = success => (
-        <div className="alert alert-info" style={{ display: success ? '' : 'none' }}>
+        <h5 className="text-success" style={{ display: success ? '' : 'none' }}>
             Thanks! Your payment was successful!
-        </div>
+        </h5>
     );
 
-    const showLoading = loading => loading && <h2 className="text-danger">Loading...</h2>;
+    const showLoading = loading => loading && <h2 className="text-primary">Loading...</h2>;
 
     return (
         <div>

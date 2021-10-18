@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Layout from './Layout';
 import { getCategories, getFilteredProducts } from './apiCore';
 import Checkbox from './Checkbox';
 import RadioBox from './RadioBox';
