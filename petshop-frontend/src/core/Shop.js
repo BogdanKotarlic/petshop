@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { getCategories, getFilteredProducts } from './apiCore';
 import Checkbox from './Checkbox';
 import RadioBox from './RadioBox';
@@ -95,25 +95,24 @@ const Shop = () => {
     return (
         <>
             <Menu />
-            <div className="container-fluid row row2">
-                <div className="col-4">
+            <div className="welcome">
+                <div>
                     <h4>Filter by categories</h4>
                     <ul>
                         <Checkbox categories={categories} handleFilters={filters => handleFilters(filters, 'category')} />
                     </ul>
-
                     <h4>Filter by price range</h4>
                     <div>
                         <RadioBox prices={prices} handleFilters={filters => handleFilters(filters, 'price')} />
                     </div>
                 </div>
                 
-                <div className="col-8">
-                    <h2 className="mb-4">PRODUCTS</h2>
+                <div style={{marginTop: '80px'}}>
+                    <h2>PRODUCTS:</h2>
                     <div className="row">
                         {filteredResults.map((product, i) => (
-                            <div key={i} className="col-4 mb-3">
-                                <Card product={product} />
+                            <div key={i} className="col-4">
+                                    <Card product={product} />
                             </div>
                         ))}
                     </div>

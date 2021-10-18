@@ -30,7 +30,7 @@ const AdminDashboard = () => {
 
     const adminInfo = () => {
         return (
-            <div className="card mb-5">
+            <div className="card" style={{marginTop: '40px'}}>
                 <h3 className="card-header name">Admin Information</h3>
                 <ul className="list-group" style={{color: 'black'}}>
                     <li className="list-group-item">Name: {name}</li>
@@ -43,13 +43,9 @@ const AdminDashboard = () => {
     return (
         <>
             <Menu />
-            <div className="welcome row">
-                <div className="col-3">
-                    {adminLinks()}
-                </div>
-                <div className="col-9">
-                    {adminInfo()}
-                </div>
+            <div className="welcome">
+                {adminLinks()}
+                {adminInfo()}
             </div>
         </>
     );

@@ -28,7 +28,7 @@ const Dashboard = () => {
     
     const userLinks = () => {
         return (
-            <div className="card">
+            <div className="card" >
                 <h4 className="card-header name">User Links</h4>
                 <ul className="list-group">
                     <li className="list-group-item">
@@ -44,7 +44,7 @@ const Dashboard = () => {
 
     const userInfo = () => {
         return (
-            <div className="card mb-5">
+            <div className="card" style={{marginTop: '40px'}}>
                 <h3 className="card-header name">User Information</h3>
                 <ul className="list-group">
                     <li className="list-group-item">{name}</li>
@@ -57,7 +57,7 @@ const Dashboard = () => {
 
     const purchaseHistory = history => {
         return (
-            <div className="card mb-5">
+            <div className="card" style={{marginTop: '40px'}}>
                 <h3 className="card-header name">Purchase history</h3>
                 <ul className="list-group">
                     <li className="list-group-item">
@@ -89,14 +89,10 @@ const Dashboard = () => {
     return (
         <>
             <Menu />
-            <div className="welcome row">
-                <div className="col-3">
-                    {userLinks()}
-                </div>
-                <div className="col-9">
-                    {userInfo()}
-                    {purchaseHistory(history)}
-                </div>
+            <div className="welcome">
+                {userLinks()}
+                {userInfo()}
+                {purchaseHistory(history)}
             </div>
         </>
     );

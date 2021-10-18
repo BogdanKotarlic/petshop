@@ -51,7 +51,7 @@ const Card = ({ product, showViewProductButton = true, showAddToCartButton=true,
               }}
               className="btn btn-danger mt-2 mb-2"
             >
-              Remove Product
+              Remove
             </button>
           )
         );
@@ -76,7 +76,7 @@ const Card = ({ product, showViewProductButton = true, showAddToCartButton=true,
     const showCartUpdateOptions = cartUpdate => {
         return cartUpdate && (
             <div className="input-group mb-3">
-                <div className="input-group-prepend">
+                <div className="input-group-prepend" style={{marginBottom: '10px'}}>
                     <span className="input-group-text">Adjust Quantity</span>
                 </div>
                 <input type="number" className="form-control" value={count} onChange={handleChange(product._id)} />
@@ -85,17 +85,15 @@ const Card = ({ product, showViewProductButton = true, showAddToCartButton=true,
     };
 
     return (
-            <div className="card">
-                <div className="card-header name">
+            <div>
+                <div className="name">
                     { product.name }
                 </div>
-                <div className="card-body">
+                <div>
                     {shouldRedirect(redirect)}
                     <ShowImage item={product} url="product" />
-                    {/* <p className="lead mt-2">{ product.description.substring(0, 100) }</p> */}
                     <p>${ product.price }</p>
                     <p>Category: {product.category && product.category.name}</p>
-                    {/* <p>Added on {moment(product.createdAt).fromNow()} </p> */}
                     {showStock(product.quantity)}
                     <br />
                     {showViewButton(showViewProductButton)}
