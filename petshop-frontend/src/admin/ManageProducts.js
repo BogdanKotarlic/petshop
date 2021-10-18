@@ -4,6 +4,7 @@ import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
 import { getProducts, deleteProduct } from "./apiAdmin";
+import Menu from "../core/Menu";
 
 const ManageProducts = () => {
     const [products, setProducts] = useState([]);
@@ -35,42 +36,38 @@ const ManageProducts = () => {
     }, []);
 
     return (
-        <Layout
-            title="Manage Products"
-            description="Perform CRUD on products"
-            className="container-fluid"
-        >
-            <div className="row">
+        <>
+            <Menu />
+            <div className="welcome row">
                 <div className="col-12">
                     <h2 className="text-center">
-                        Total {products.length} products
+                        TOTAL PRODUCTS: {products.length}
                     </h2>
-                    <hr />
-                    <ul className="list-group">
+                    <hr style={{backgroundColor: '#fff'}} />
+                    <div class="container">
                         {products.map((p, i) => (
-                            <li
-                                key={i}
-                                className="list-group-item d-flex justify-content-between align-items-center"
-                            >
-                                <strong>{p.name}</strong>
-                                <Link to={`/admin/product/update/${p._id}`}>
-                                    <span className="badge badge-warning badge-pill">
-                                        Update
-                                    </span>
-                                </Link>
-                                <span
-                                    onClick={() => destroy(p._id)}
-                                    className="badge badge-danger badge-pill"
-                                >
+                            <div key={i} class="row" style={{textAlign: 'center'}}>
+                                <div class="col-sm">
+                                    <label>{p.name}</label>
+                                </div>
+                                <div class="col-sm">
+                                    <Link to={`/admin/product/update/${p._id}`}>
+                                        <label className="badge badge-info size">
+                                            Update
+                                        </label>
+                                    </Link>
+                                </div>
+                                <div class="col-sm">
+                                <label onClick={() => destroy(p._id)} className="badge badge-danger size">
                                     Delete
-                                </span>
-                            </li>
-                        ))}
-                    </ul>
-                    <br />
+                                </label>
+                            </div>
+                        </div>
+                        ))} 
+                    </div>
                 </div>
             </div>
-        </Layout>
+        </>
     );
 };
 

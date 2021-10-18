@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import Layout from '../core/Layout';
 import { Link } from "react-router-dom";
 import { isAuthenticated } from "../auth";
 import { createCategory } from './apiAdmin';
+import Menu from "../core/Menu";
 
 const AddCategory = () => {
     const [name, setName] = useState("");
@@ -33,44 +34,45 @@ const AddCategory = () => {
     };
 
     const newCategoryForm = () => (
-        <form onSubmit={ clickSubmit }>
+        <form className="welcome" onSubmit={ clickSubmit }>
             <div className="form-group">
-                <label className="text-muted">Name</label>
+                <label className="text">Name</label>
                 <input type="text" className="form-control" onChange={ handleChange } value={name} autoFocus required />
             </div>
-            <button className="btn btn-outline-primary">Create Category</button>
+            <button className="btn btn-dark">Create Category</button>
+            {showError()}
+            {showSuccess()}
+            {goBack()}
         </form>
     );
 
     const showSuccess = () => {
         if (success) {
-            return <h3 className="text-success">{name} is created</h3>;
+            return <h3 className="text-success">Category is created!</h3>;
         }
     }
 
     const showError = () => {
         if (error) {
-            return <h3 className="text-danger">Category should be unique</h3>;
+            return <h3 className="text-danger">Category should be unique!</h3>;
         }
     }
 
     const goBack = () => (
         <div className="mt-5">
-            <Link to="/admin/dashboard" className="text-warning">Back to Dashboard</Link>
+            <Link to="/admin/dashboard" style={{color: '#f5dcb4'}}>Back to Dashboard</Link>
         </div>
     );
 
     return (
-        <Layout title="Add a new Category" description={`G'day ${user.name}, ready to add a new category?`}>
+        <>
+            <Menu />
             <div className="row">
                 <div className="col-md-8 offset-md-2">
-                    {showSuccess()}
-                    {showError()}
                     {newCategoryForm()}
-                    {goBack()}
                 </div>
             </div>
-        </Layout>
+        </>
     );
 };
 

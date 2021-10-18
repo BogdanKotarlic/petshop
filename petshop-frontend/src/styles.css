@@ -7,10 +7,16 @@
     background-color: #484e53;
     color: white;
     font-family: 'Poppins', sans-serif;
+    max-width: 100%;
+    overflow-x: hidden;
  }
 
  .padding {
      padding-bottom: 3rem;
+ }
+
+ .size {
+   font-size: 13px;
  }
 
  .welcome {
@@ -18,6 +24,11 @@
     margin: 0 auto;
     padding-top: 3rem;
  }
+
+ .welcome2 {
+  width: 75%;
+  margin: 0 auto;
+}
 
  .row {
     padding-top: 3rem; 

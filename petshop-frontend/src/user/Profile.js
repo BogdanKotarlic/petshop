@@ -61,29 +61,29 @@ const Profile = ({ match }) => {
     };
 
     const profileUpdate = (name, email, password) => (
-        <form>
+        <form className="welcome">
+            <h2 className="mb-4">Profile update</h2>
             <div className="form-group">
-                <label className="text-muted">Name</label>
+                <label className="text">Name</label>
                 <input type="text" onChange={handleChange('name')} className="form-control" value={name} />
             </div>
             <div className="form-group">
-                <label className="text-muted">Email</label>
+                <label className="text">Email</label>
                 <input type="email" onChange={handleChange('email')} className="form-control" value={email} />
             </div>
             <div className="form-group">
-                <label className="text-muted">Password</label>
+                <label className="text">Password</label>
                 <input type="password" onChange={handleChange('password')} className="form-control" value={password} />
             </div>
 
-            <button onClick={clickSubmit} className="btn btn-primary">
-                Submit
+            <button onClick={clickSubmit} className="btn btn-dark">
+                Update
             </button>
         </form>
     );
 
     return (
         <Layout title="Profile" description="Update your profile" className="container-fluid">
-            <h2 className="mb-4">Profile update</h2>
             {profileUpdate(name, email, password)}
             {redirectUser(success)}
         </Layout>

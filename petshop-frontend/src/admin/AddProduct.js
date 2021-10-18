@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Layout from '../core/Layout';
 import { isAuthenticated } from "../auth";
 import { createProduct, getCategories } from './apiAdmin';
+import Menu from "../core/Menu";
+import { Link } from "react-router-dom";
 
 const AddProduct = () => {
     const { user, token } = isAuthenticated();
@@ -21,7 +23,7 @@ const AddProduct = () => {
         formData: ''
     });
 
-    const { name, description, price, categories, category, shipping, quantity, loading, error, createdProduct, redirectToProfile, formData } = values;
+    const { name, description, price, categories, category, shipping, quantity, error, loading, createdProduct, redirectToProfile, formData } = values;
 
     const init = () => {
         getCategories().then(data => {
@@ -44,7 +46,7 @@ const AddProduct = () => {
     const handleChange = name => event => {
         const value = name === 'photo' ? event.target.files[0] : event.target.value;
         formData.set(name, value);
-        setValues({ ...values, [name]: value });
+        setValues({ ...values, [name]: value, error: '' });
     };
 
     const clickSubmit = (event) => {
@@ -63,28 +65,34 @@ const AddProduct = () => {
         });
     };
 
+    const goBack = () => (
+        <div className="welcome2">
+            <Link to="/admin/dashboard" style={{color: '#f5dcb4'}}>Back to Dashboard</Link>
+        </div>
+    );
+
     const newPostForm = () => (
-        <form className="mb-3" onSubmit={clickSubmit}>
-            <h4>Post Photo</h4>
+        <form className="welcome" onSubmit={clickSubmit}>
+            <label className="text">Photo</label>
             <div className="form-group">
                 <label className="btn btn-secondary">
                     <input onChange={handleChange('photo')} type="file" name="photo" accept="image/*" />
                 </label>
             </div>
             <div className="form-group">
-                <label className="text-muted">Name</label>
+                <label className="text">Name</label>
                 <input onChange={handleChange('name')} type="text" className="form-control" value={name} />
             </div>
             <div className="form-group">
-                <label className="text-muted">Description</label>
+                <label className="text">Description</label>
                 <textarea onChange={handleChange('description')} className="form-control" value={description} />
             </div>
             <div className="form-group">
-                <label className="text-muted">Price</label>
+                <label className="text">Price</label>
                 <input onChange={handleChange('price')} type="number" className="form-control" value={price} />
             </div>
             <div className="form-group">
-                <label className="text-muted">Category</label>
+                <label className="text">Category</label>
                 <select onChange={handleChange('category')} className="form-control">
                     <option>Please select</option>
                     {categories && categories.map((c, i) => (
@@ -93,7 +101,7 @@ const AddProduct = () => {
                 </select>
             </div>
             <div className="form-group">
-                <label className="text-muted">Shipping</label>
+                <label className="text">Shipping</label>
                 <select onChange={handleChange('shipping')} className="form-control">
                     <option>Please select</option>
                     <option value="0">No</option>
@@ -101,43 +109,33 @@ const AddProduct = () => {
                 </select>
             </div>
             <div className="form-group">
-                <label className="text-muted">Quantity</label>
+                <label className="text">Quantity</label>
                 <input onChange={handleChange('quantity')} type="number" className="form-control" value={quantity} />
             </div>
-
-            <button className="btn btn-outline-primary">Create Product</button>
+            {showSuccess()}
+            {showError()}
+            <button className="btn btn-dark">Create Product</button>
         </form>
     );
 
     const showError = () => (
-        <div className="alert alert-danger" style={{display: error ? '' : 'none'}}>{error}</div>
+        <h3 className="text-danger" style={{display: error ? '' : 'none'}}>{error}</h3>
     );
 
     const showSuccess = () => (
-        <div className="alert alert-info" style={{display: createdProduct ? '' : 'none'}}>
-            <h2>{`${createdProduct}`} is created</h2>
-        </div>
-    );
-
-    const showLoading = () => (
-        loading && (
-            <div className="alert alert-success">
-                <h2>Loading...</h2>
-            </div>
-        )
+        <h3 className="text-success" style={{display: createdProduct ? '' : 'none'}}>Product is created</h3>
     );
 
     return (
-        <Layout title="Add a new Product" description={`G'day ${user.name}, ready to add a new product?`}>
+        <>
+            <Menu />
             <div className="row">
                 <div className="col-md-8 offset-md-2">
-                    {showLoading()}
-                    {showSuccess()}
-                    {showError()}
                     {newPostForm()}
+                    {goBack()}
                 </div>
             </div>
-        </Layout>
+        </>
     );
 };
 

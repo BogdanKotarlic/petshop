@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Layout from '../core/Layout';
-import { Link } from "react-router-dom";
 import { isAuthenticated } from "../auth";
 import { listOrders, getStatusValues, updateOrderStatus } from './apiAdmin';
 import moment from "moment";
+import Menu from "../core/Menu";
 
 const Orders = () => {
     const [orders, setOrders] = useState([]);
@@ -39,11 +38,12 @@ const Orders = () => {
     const showOrdersLength = () => {
         if (orders.length > 0) {
             return (
-                <h1 className="text-danger display-2">Total orders: {orders.length}</h1>
+                <h2 style={{color: "#f5dcb4", border: '2px solid #f5dcb4', padding: '10px'}}>Total orders: {orders.length}</h2>
             );
         } else {
             return (
-                <h1 className="text-danger">No orders</h1>
+                <h2 style={{color: "#f5dcb4"}}>No orders</h2>
+
             );
         }
     };
@@ -90,19 +90,20 @@ const Orders = () => {
     );
 
     return (
-        <Layout title="Orders" description={`G'day ${user.name}, you can manage all the orders here`}>
-            <div className="row">
+        <>
+            <Menu />
+            <div className="welcome row">
                 <div className="col-md-8 offset-md-2">
                     {showOrdersLength()}
                     
                     {orders.map((o, oIndex) => {
                         return (
-                            <div className="mt-5" key={oIndex} style={{borderBottom: '5px solid indigo'}}>
-                                <h2 className="mb-5">
-                                    <span className="bg-primary">Order ID: {o._id}</span>
-                                </h2>
+                            <div className="mt-5" key={oIndex} style={{borderBottom: '3px solid white'}}>
+                                <h5 className="mb-5">
+                                    <span className="bg-dark">Order ID: {o._id}</span>
+                                </h5>
 
-                                <ul className="list-group mb-2">
+                                <ul className="list-group mb-2" style={{color: 'black'}}>
                                     <li className="list-group-item">{showStatus(o)}</li>
                                     <li className="list-group-item">Transaction ID: {o.transaction_id}</li>
                                     <li className="list-group-item">Amount: ${o.amount}</li>
@@ -111,10 +112,10 @@ const Orders = () => {
                                     <li className="list-group-item">Delivery address: {o.address}</li>
                                 </ul>
 
-                                <h3 className="mt-4 mb-4 font-italic">Total products in the order: {o.products.length}</h3>
+                                <h4 className="mt-4 mb-4 font-italic">Total products in the order: {o.products.length}</h4>
 
                                 {o.products.map((p, pIndex) => (
-                                    <div className="mb-4" key={pIndex} style={{padding: '20px', border: '1px solid indigo'}}>
+                                    <div className="mb-4" key={pIndex} style={{padding: '20px', border: '1px solid white'}}>
                                         {showInput('Product name', p.name)}
                                         {showInput('Product price', p.price)}
                                         {showInput('Product total', p.count)}
@@ -126,7 +127,7 @@ const Orders = () => {
                     })}
                 </div>
             </div>
-        </Layout>
+        </>
     )
 };
 
