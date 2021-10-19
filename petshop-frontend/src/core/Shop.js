@@ -105,14 +105,13 @@ const Shop = () => {
                     <div>
                         <RadioBox prices={prices} handleFilters={filters => handleFilters(filters, 'price')} />
                     </div>
-                </div>
-                
+                </div> 
                 <div style={{marginTop: '80px'}}>
                     <h2>PRODUCTS:</h2>
-                    <div className="row">
+                    <div className="row padding">
                         {filteredResults.map((product, i) => (
                             <div key={i} className="col-4">
-                                    <Card product={product} />
+                                <Card product={product} />
                             </div>
                         ))}
                     </div>

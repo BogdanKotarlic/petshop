@@ -10,8 +10,8 @@ const Card = ({ product, showViewProductButton = true, showAddToCartButton=true,
     const showViewButton = (showViewProductButton) => {
         return (
             showViewProductButton && (
-                <Link to={`/product/${product._id}`} className="mr-2">
-                    <button className="btn btn-secondary mt-2 mb-2">
+                <Link to={`/product/${product._id}`}>
+                    <button style={{backgroundColor: '#282d32', color: 'white', border: 'none'}} className="mt-2 mb-2 ml-2 mr-2">
                         View Product
                     </button>
                 </Link>
@@ -34,7 +34,7 @@ const Card = ({ product, showViewProductButton = true, showAddToCartButton=true,
     const showAddToCart = showAddToCartButton => {
         return (
             showAddToCartButton && (
-                <button onClick={addToCart} className="btn btn-dark mt-2 mb-2">
+                <button style={{backgroundColor: '#282d32', color: 'white', border: 'none'}} onClick={addToCart} className="mt-2 mb-2 ml-2 mr-2">
                     Add to card
                 </button>
             )
@@ -49,7 +49,8 @@ const Card = ({ product, showViewProductButton = true, showAddToCartButton=true,
                 removeItem(product._id);
                 setRun(!run);
               }}
-              className="btn btn-danger mt-2 mb-2"
+              className="mt-2 mb-2 ml-2"
+              style={{backgroundColor: 'red', color: 'white', border: 'none'}}
             >
               Remove
             </button>
@@ -75,25 +76,22 @@ const Card = ({ product, showViewProductButton = true, showAddToCartButton=true,
 
     const showCartUpdateOptions = cartUpdate => {
         return cartUpdate && (
-            <div className="input-group mb-3">
-                <div className="input-group-prepend" style={{marginBottom: '10px'}}>
-                    <span className="input-group-text">Adjust Quantity</span>
-                </div>
+            <div style={{width: '100%', marginBottom: '10px'}}>
                 <input type="number" className="form-control" value={count} onChange={handleChange(product._id)} />
             </div>
         )
     };
 
     return (
-            <div>
-                <div className="name">
+            <div className="text-center" style={{border: '1px solid white'}}>
+                <div className="name" style={{marginTop: '10px'}}>
                     { product.name }
                 </div>
                 <div>
                     {shouldRedirect(redirect)}
                     <ShowImage item={product} url="product" />
                     <p>${ product.price }</p>
-                    <p>Category: {product.category && product.category.name}</p>
+                    <p>{product.category && product.category.name}</p>
                     {showStock(product.quantity)}
                     <br />
                     {showViewButton(showViewProductButton)}

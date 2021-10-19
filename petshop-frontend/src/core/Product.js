@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { read, listRelated } from './apiCore';
 import Card from './Card';
+import Menu from './Menu';
+import Footer from './Footer';
 
 const Product = props => {
     const [product, setProduct] = useState({});
@@ -31,13 +33,14 @@ const Product = props => {
 
     return (
         <>
-            <div className="row">
-                <div className="col-8">
+            <Menu />
+            <div className="welcome row">
+                <div className="col-8 mb-5">
                     {product && product.description && <Card product={product} showViewProductButton={false} />}
                 </div>
 
                 <div className="col-4">
-                    <h4>Related products</h4>
+                    <h4>Related products:</h4>
                     {relatedProduct.map((p, i) => (
                         <div className="mb-3" key={i}>
                             <Card product={p} />
@@ -45,6 +48,7 @@ const Product = props => {
                     ))}
                 </div>
             </div>
+            <Footer />
         </>
     );
 };

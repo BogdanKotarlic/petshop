@@ -177,12 +177,8 @@
   color: white;
 }
 
-@media (max-width: 576px) {
+/* @media (max-width: 576px) {
   .card-body p {
     font-size: 12px;
   }
-
-  /* .btn {
-    font-size: 40%;
-  } */
-}
+} */
