@@ -38,7 +38,7 @@ const Cart = () => {
     };
 
     const noItemsMessage = () => (
-        <h2>Your cart is empty. <br/> <Link style={{color: 'white'}} to="/shop">Continue shopping</Link></h2>
+        <h2>Your cart is empty. <br/> <br/> <Link style={{color: '#f5dcb4'}} to="/shop">Continue shopping</Link></h2>
     );
 
     return (
