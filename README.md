@@ -1,2 +1,2 @@
 # petshop
-React + NodeJS + MongoDB 
+React + NodeJS + MongoDB - **Practice**
